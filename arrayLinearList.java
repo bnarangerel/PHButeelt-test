@@ -1,18 +1,19 @@
-package lab01;
+package Lab01;
+
 import java.util.*; 
 import java.util.Scanner;
 
-public class arrayLinearList {
+public class ArrayLinearList {
 	
 	protected Object [] element;
 	protected int size;
 	
-	public arrayLinearList(int size) {
+	public ArrayLinearList(int size) {
 		if(size >= 0){
 			element = new Object [size];
 		}
 	}
-	public arrayLinearList(){
+	public ArrayLinearList(){
 		this(10);
 	}
 	public boolean isEmpty(){
@@ -23,7 +24,7 @@ public class arrayLinearList {
 		return size;
 	}
    	private boolean checkIndex(int index){
-      		if (index < 0 || index >= size) return false;
+      		if (index < 0 || index > size) return false;
 		else return true;
    	}
 	public Object get(int index){
@@ -37,18 +38,22 @@ public class arrayLinearList {
    	}      
    	public Object remove(int index){
      		if(checkIndex(index)){
-			Object removedElement = element[index];
-			for (int i = index + 1; i < size; i ++) element[i - 1] = element[i];
-			element[--size] = null;   
-			return removedElement;
-		}
+				Object removedElement = element[index];
+				for (int i = index + 1; i < size; i ++) element[i - 1] = element[i];
+				element[--size] = null;   
+				return removedElement;
+     		}else return -1;
    	}
    	public void add(int index, Object theElement){
    		if(checkIndex(index)){
-      			if (size == element.length) element = ChangeArrayLength.changeLength1D(element, 2 * size);
+   				if (size == element.length) { 
+   					Object newArr[] = new ArrayLinearList[2 * (size + 1)];
+   					System.arraycopy(element, 0, newArr, 0, size);
+   					element = newArr;
+   				} 
       			for (int i = size - 1; i >= index; i--) element[i + 1] = element[i];
    				element[index] = theElement;
-  				size++;
+  				size ++;
 		}
    	}
    	public String toString(){
@@ -63,7 +68,7 @@ public class arrayLinearList {
    	}
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
-		MyArrayLinearList list = new MyArrayLinearList();
+		ArrayLinearList list = new ArrayLinearList();
 		
 		boolean garah = false;
 		
@@ -128,8 +133,7 @@ public class arrayLinearList {
 					sc.close();
 					break;
 			}
+		}
 	}
-	
-	
-	
 }
+
